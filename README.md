@@ -9,7 +9,7 @@ Follow instructions at https://github.com/elecnix/evalmtl
 # 2. Create streets table
 
     $ psql -d evalmtl
-    evalmtl=# create table streets as select distinct street_name from evaluations_2014 order by street_name;
+    evalmtl=# create table streets as select distinct street_name, arrondissement as borough, municipalite as city from evaluations_2014;
 
 ## 3. Install node modules, assuming NPM is already installed:
 

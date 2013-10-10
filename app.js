@@ -8,11 +8,13 @@ app.get('/', function(req, res){
 app.get('/properties', function(req, res){
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if(err) {
+      console.log(err);
       return res.send(err);
     }
     client.query('SELECT * FROM evaluations_2014 limit 10', function(err, result) {
       done();
       if(err) {
+        console.log(err);
         return res.send(err);
       }
       res.send(result.rows);
@@ -20,13 +22,19 @@ app.get('/properties', function(req, res){
   });
 });
 app.get('/streets', function(req, res){
+  if (!req.query.q) {
+    return res.send("Query parameter missing");
+  }
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if(err) {
+      console.log(err);
       return res.send(err);
     }
-    client.query('SELECT * FROM streets', function(err, result) {
+    var query = "SELECT street_name, borough, city as name FROM streets WHERE street_name ilike $1"
+    client.query(query, ['%' + req.query.q + '%'], function(err, result) {
       done();
       if(err) {
+        console.log(err);
         return res.send(err);
       }
       res.send(result.rows);
