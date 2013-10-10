@@ -7,10 +7,14 @@ app.get('/', function(req, res){
 });
 app.get('/properties', function(req, res){
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    if(err) return console.error(err);
+    if(err) {
+      return res.send(err);
+    }
     client.query('SELECT * FROM evaluations_2014 limit 10', function(err, result) {
       done();
-      if(err) return console.error(err);
+      if(err) {
+        return res.send(err);
+      }
       res.send(result.rows);
     });
   });
@@ -18,7 +22,7 @@ app.get('/properties', function(req, res){
 app.get('/streets', function(req, res){
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     if(err) {
-      res.send(err);
+      return res.send(err);
     }
     client.query('SELECT * FROM streets', function(err, result) {
       done();
