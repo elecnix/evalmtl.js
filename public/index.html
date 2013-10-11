@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="fr" ng-app="evalmtl">
+  <head>
+    <title>My Angular App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.2.1/lodash.compat.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/restangular/1.1.3/restangular.min.js"></script>
+    <script src="javascripts/evalmtl.js"></script>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/evalmtl.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Évaluations foncières de Montréal</h1>
+      <div ng-controller="EvalMtlCtrl">
+        <input type="text" ng-model="q_street" placeholder="Nom de rue" ng-change="search()">
+        <ul class="unstyled">
+          <li ng-repeat="street in streets | filter:q_street | limitTo:10">
+            <span class="street-name">{{street.name}}</span>
+            <span class="street-borough">{{street.borough}}</span>
+            <span class="street-city">{{street.city}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+
+</html>
