@@ -19,7 +19,7 @@
           <div class="street-results">
           <div ng-show="!loaded"><img src="images/ajax-loader.gif"/></div>
             <ul class="unstyled" ng-show="streets.length > 0">
-              <li ng-repeat="street in streets | filter:q_street | limitTo:50">
+              <li ng-repeat="street in streets | orderBy:'name' | limitTo:50">
                 <a href="#street" title="{{street.borough}} ({{street.city}})">{{street.name}}</a>
               </li>
             </ul>
