@@ -14,16 +14,19 @@
     <div class="container">
       <h1>Évaluations foncières de Montréal</h1>
       <div ng-controller="EvalMtlCtrl">
-        <input type="text" ng-model="q_street" placeholder="Nom de rue" ng-change="search()">
-        <div class="street-results">
-        <div ng-show="!loaded"><img src="images/ajax-loader.gif"/></div>
-          <ul class="unstyled street-list">
-            <li ng-repeat="street in streets | filter:q_street | limitTo:50">
-              <span class="street-name">{{street.name}}</span>
-              <span class="street-borough">{{street.borough}}</span>
-              <span class="street-city">{{street.city}}</span>
-            </li>
-          </ul>
+        <div class="search_col col-md-4">
+          <input type="text" ng-model="q_street" placeholder="Nom de rue" ng-change="search()">
+          <div class="street-results">
+          <div ng-show="!loaded"><img src="images/ajax-loader.gif"/></div>
+            <ul class="unstyled" ng-show="streets.length > 0">
+              <li ng-repeat="street in streets | filter:q_street | limitTo:50">
+                <a href="#street" title="{{street.borough}} ({{street.city}})">{{street.name}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-8">
+          Main pane
         </div>
       </div>
     </div>
