@@ -8,7 +8,7 @@ exports.search = function(req, res){
     var query;
     var params = [];
     if (req.query.q) {
-      query = "SELECT street_name as name, borough, city FROM streets WHERE street_name ilike $1"
+      query = "SELECT street_name as name, borough, city FROM streets WHERE street_name ILIKE $1 LIMIT 50"
       params = ['%' + req.query.q + '%'];
     } else {
       query = "SELECT street_name as name, borough, city FROM streets"
