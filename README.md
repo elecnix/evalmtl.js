@@ -9,7 +9,9 @@ Follow instructions at https://github.com/elecnix/evalmtl
 # 2. Create streets table
 
     $ psql -d evalmtl
-    evalmtl=# create table streets as select distinct street_name, arrondissement as borough, municipalite as city from evaluations_2014;
+    evalmtl=# CREATE TABLE streets AS SELECT row_number() OVER (ORDER BY street_name, arrondissement, municipalite) AS id, street_name, arrondissement AS borough, municipalite AS city FROM evaluations_2014 GROUP BY street_name, arrondissement, municipalite;
+    evalmtl=# ALTER TABLE streets ADD PRIMARY KEY (id);
+    evalmtl=# CREATE INDEX ON streets (street_name);
 
 ## 3. Install node modules, assuming NPM is already installed:
 
