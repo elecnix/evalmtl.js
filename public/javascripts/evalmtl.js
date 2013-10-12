@@ -8,6 +8,8 @@ angular.module('evalmtl', ['restangular']).
       Restangular.all('streets').getList({q: $scope.q_street}).then(function(streets) {
         $scope.loaded = true;
         $scope.streets = streets;
+      }, function errorCallback() {
+        alert("Oops error from server :(");
       });
     };
   });
