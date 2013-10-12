@@ -2,14 +2,16 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var pg = require('pg');
-var streets = require('./routes/streets');
+var street = require('./routes/streets');
 app.use(express.logger());
 
 app.use(app.router);
 console.log('static: ' + path.join(__dirname, 'public'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/streets', streets.search);
+app.get('/streets', street.search);
+app.get('/streets/:id', street.get);
+
 app.use('/', express.static(path.join(__dirname, 'index.html')));
 
 app.get('/properties', function(req, res){

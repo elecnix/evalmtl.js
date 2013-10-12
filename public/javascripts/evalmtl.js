@@ -1,5 +1,11 @@
 angular.module('evalmtl', ['restangular']).
-  controller('EvalMtlCtrl', function($scope, Restangular) {
+  service('SelectedStreet', function() {
+    this.street_id = null;
+    this.select = function(street_id) { this.street_id = street_id; };
+    this.clear = function() { this.street_id = null; };
+  }).
+  controller('EvalMtlCtrl', function($scope, Restangular, SelectedStreet) {
+    $scope.SelectedStreet = SelectedStreet;
     $scope.loaded = true;
     $scope.streets = [];
     $scope.search = function() {
@@ -12,5 +18,19 @@ angular.module('evalmtl', ['restangular']).
         alert("Oops error from server :(");
       });
     };
+    $scope.select = function(street_id) {
+      SelectedStreet.select(street_id);
+    };
+  }).
+  controller('StreetCtrl', function($scope, Restangular) {
+    $scope.street = null;
+    $scope.$watch('SelectedStreet.street_id', function(street_id){
+      if (street_id == null) return;
+      Restangular.one('streets', street_id).get().then(function(street) {
+        $scope.street = street;
+      }, function errorCallback() {
+        alert("Oops error from server :(");
+      });
+    });
   });
 

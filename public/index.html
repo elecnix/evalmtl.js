@@ -20,13 +20,30 @@
           <div ng-show="!loaded"><img src="images/ajax-loader.gif"/></div>
             <ul class="unstyled" ng-show="streets.length > 0">
               <li ng-repeat="street in streets | orderBy:'name' | limitTo:50">
-                <a href="#street" title="{{street.borough}} ({{street.city}})">{{street.name}}</a>
+                <a href="#street/{{street.id}}" ng-click="select(street.id)" title="{{street.borough}} ({{street.city}})">{{street.name}}</a>
               </li>
             </ul>
           </div>
         </div>
-        <div class="col-md-8">
-          
+        <div class="col-md-8" ng-controller="StreetCtrl">
+          <div ng-show="street != null">
+            <h2>{{street.name}}</h2>
+            <h3>{{street.borough}} {{street.city}}</h3>
+            <table>
+              <tr>
+                <th>Adresse</th>
+                <th>Terrain</th>
+                <th>Bâtiment</th>
+                <th>Superficie</th>
+              </tr>
+              <tr ng-repeat="property in street.properties | orderBy:'adresse'">
+                <td>{{property.adresse}}</td>
+                <td>{{property.valeur_terrain}}</td>
+                <td>{{property.valeur_batiment}}</td>
+                <td>{{property.superficie}}</td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
     </div>
